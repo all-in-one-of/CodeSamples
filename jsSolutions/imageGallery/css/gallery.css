@@ -1,0 +1,50 @@
+#img01 {position: absolute; top: 250; left: 125; z-index: 1;}
+#img02 {position: absolute; top: 250; left: 250; z-index: 1;}
+#img03 {position: absolute; top: 250; left: 375; z-index: 1;}
+#img04 {position: absolute; top: 250; left: 500; z-index: 1;}
+#img05 {position: absolute; top: 375; left: 125; z-index: 1;}
+#img06 {position: absolute; top: 375; left: 250; z-index: 1;}
+#img07 {position: absolute; top: 375; left: 375; z-index: 1;}
+#img08 {position: absolute; top: 375; left: 500; z-index: 1;}
+#img09 {position: absolute; top: 500; left: 125; z-index: 1;}
+#img10 {position: absolute; top: 500; left: 250; z-index: 1;}
+#img11 {position: absolute; top: 500; left: 375; z-index: 1;}
+#img12 {position: absolute; top: 500; left: 500; z-index: 1;}
+#img13 {position: absolute; top: 625; left: 125; z-index: 1;}
+#img14 {position: absolute; top: 625; left: 250; z-index: 1;}
+#img15 {position: absolute; top: 625; left: 375; z-index: 1;}
+#img16 {position: absolute; top: 625; left: 500; z-index: 1;}
+#img17 {position: absolute; top: 750; left: 125; z-index: 1;}
+#img18 {position: absolute; top: 750; left: 250; z-index: 1;}
+#img19 {position: absolute; top: 750; left: 375; z-index: 1;}
+#img20 {position: absolute; top: 750; left: 500; z-index: 1;}
+#img21 {position: absolute; top: 875; left: 125; z-index: 1;}
+#img22 {position: absolute; top: 875; left: 250; z-index: 1;}
+#img23 {position: absolute; top: 875; left: 375; z-index: 1;}
+#img24 {position: absolute; top: 875; left: 500; z-index: 1;}
+#img25 {position: absolute; top: 1000; left: 125; z-index: 1;}
+#img26 {position: absolute; top: 1000; left: 250; z-index: 1;}
+#img27 {position: absolute; top: 1000; left: 375; z-index: 1;}
+#img28 {position: absolute; top: 1000; left: 500; z-index: 1;}
+#img29 {position: absolute; top: 1125; left: 125; z-index: 1;}
+#img30 {position: absolute; top: 1125; left: 250; z-index: 1;}
+#img31 {position: absolute; top: 1125; left: 375; z-index: 1;}
+#img32 {position: absolute; top: 1125; left: 500; z-index: 1;}
+#img33 {position: absolute; top: 1250; left: 125; z-index: 1;}
+#img34 {position: absolute; top: 1250; left: 250; z-index: 1;}
+#img35 {position: absolute; top: 1250; left: 375; z-index: 1;}
+#img36 {position: absolute; top: 1250; left: 500; z-index: 1;}
+#img37 {position: absolute; top: 1375; left: 125; z-index: 1;}
+#img38 {position: absolute; top: 1375; left: 250; z-index: 1;}
+
+
+#blackbg {
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 10;
+	background-color: black;
+	opacity: 0.85;
+	display: none;
+}
+

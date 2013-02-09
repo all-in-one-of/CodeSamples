@@ -1,0 +1,168 @@
+<html>
+<head>
+<title>Image Gallery</title>
+<link rel="stylesheet" type="text/css" href="css/gallery.css" />
+<script src="js/jquery-1.7.2.min.js"></script>
+<script src="js/handlebars-1.0.rc.1.js"></script>
+<!--Using a template to save space-->
+<script id="entry-template" type="text/x-handlebars-template">
+  <img id="img{{id}}" src="{{link}}">
+</script>
+<script type="text/javascript">
+
+/****************************************
+* Designed and Coded by Wesley Hauwiller*
+* Revised 2012-10-13                    *
+* Textures are derived from Stock Images*
+* provided by: www.bashcorpo.com        *
+* and www.cgtextures.com                *
+****************************************/
+
+//Loop through images and preload them
+function preload(arrayOfImages) {
+	var i = 0;
+	var image = [];
+    $(arrayOfImages).each(function(){
+		image[i] = new Image();
+        image[i].src = this;
+		i++;
+    });
+	return image; //return array of preloaded images
+}
+
+var pic = preload(['img/01.png','img/02.png','img/03.png','img/04.png','img/05.png','img/06.png','img/07.png','img/08.png','img/09.png','img/10.png','img/11.png','img/12.png','img/13.png','img/14.png','img/15.png','img/16.png','img/17.png','img/18.jpg','img/19.jpg','img/20.jpg','img/21.jpg','img/22.jpg','img/23.jpg','img/24.jpg','img/25.jpg','img/26.jpg','img/27.jpg','img/28.jpg','img/29.jpg','img/30.jpg','img/31.jpg','img/32.jpg','img/33.jpg','img/34.jpg','img/35.jpg','img/36.jpg','img/37.jpg','img/38.jpg']);
+var thumb = preload(['img/t01.jpg','img/t02.jpg','img/t03.jpg','img/t04.jpg','img/t05.jpg','img/t06.jpg','img/t07.jpg','img/t08.jpg','img/t09.jpg','img/t10.jpg','img/t11.jpg','img/t12.jpg','img/t13.jpg','img/t14.jpg','img/t15.jpg','img/t16.jpg','img/t17.jpg','img/t18.jpg','img/t19.jpg','img/t20.jpg','img/t21.jpg','img/t22.jpg','img/t23.jpg','img/t24.jpg','img/t25.jpg','img/t26.jpg','img/t27.jpg','img/t28.jpg','img/t29.jpg','img/t30.jpg','img/t31.jpg','img/t32.jpg','img/t33.jpg','img/t34.jpg','img/t35.jpg','img/t36.jpg','img/t37.jpg','img/t38.jpg']);
+
+
+// Set coordinates for thumbnails
+var thumbLinks = [];
+for(var i = 0; i < thumb.length; i++)
+{
+	var x = i % 4;
+	var y = i / 4;
+	thumb[i].title = x.toString() + y.toString().substr(0,1);
+	var thisLink = thumb[i].src;
+	var index = i + 1;
+	if(index < 10)
+	{
+		index = "0" + index.toString();
+	}
+	else
+	{
+		index = index.toString();
+	}
+	thumbLinks[i] = {link: thisLink, id: index}; 
+}
+
+//When the page is loaded, append the thumbnails
+
+$(function() {
+for(var i = 0; i < thumbLinks.length; i++)
+{
+	var template = Handlebars.compile($("#entry-template").html());
+	var thumbHtml = template(thumbLinks[i]);
+	$("body").append(thumbHtml);
+}});
+
+var zoomed; //Tracks which image is zoomed in.
+
+// Determine coordinates to return to
+function getCord(picnum) 
+{
+	var x = thumb[picnum].title.substr(0,1);
+	var y = thumb[picnum].title.substr(1,1);
+	var xcord = (x*125) + 125;
+	var ycord = (y*125) + 250;
+	return [xcord,ycord];
+}
+
+$(function () {
+	$('img').click( function (e) {
+		if(e.target.id.substr(0,3) == 'img')
+		{
+			picid = "#" + e.target.id; // CSS Identifier (i.e. '#img1')
+			picnum = e.target.id.substr(3,2); // Array Index of corrisponding target
+			if(picnum.substr(0,1) == "0")
+			{
+				picnum = picnum.substr(1,1);
+			}
+			picnum -= 1;
+			if(zoomed != e.target.id) // Zoom in if not currently
+			{
+				zoomed = e.target.id; //Mark as zoomed in
+				$(picid).animate({
+					width: pic[picnum].width,
+					height: pic[picnum].height,
+					top: $(window).scrollTop() + $(window).height() / 10,
+					left: $(window).scrollLeft() + $(window).width() / 20
+				},1000).css({'z-index' : '15'}); //Animate Zoom in
+				document.images[e.target.id].src=pic[picnum].src; //Swap image
+				$('#blackbg').width($(document).width()).height($(document).height()).css({'top': $(window).scrollTop(), 'left' : $(window).scrollLeft()}).fadeIn(1000); //Fade In backdrop
+			}
+			else // else Zoom back out
+			{
+				retCord = getCord(picnum);
+				$(picid).animate({
+					width: thumb[picnum].width,
+					height: thumb[picnum].height,
+					top: retCord[1],
+					left: retCord[0]
+				},1000); //Animate zoom out
+				setTimeout(function () {
+					document.images[e.target.id].src=thumb[picnum].src;
+					$(picid).css({'z-index' : '1'});
+					}, 1000); //Swap with thumbnail
+				$('#blackbg').fadeOut(1000); //Fade out backdrop
+				zoomed = null; //Mark as zoomed out
+			}
+		}
+	});
+});
+
+$(function () {
+	$('#blackbg').click( function () {
+		if(zoomed)
+		{
+			picid = "#" + zoomed; // CSS Identifier (i.e. '#img1')
+			picnum = zoomed.substr(3,2); // Array Index of corrisponding target
+			if(picnum.substr(0,1) == "0")
+			{
+				picnum = picnum.substr(1,1);
+			}
+			picnum -= 1;
+			retCord = getCord(picnum);
+				$(picid).animate({
+					width: thumb[picnum].width,
+					height: thumb[picnum].height,
+					top: retCord[1],
+					left: retCord[0]
+				},1000); //Animate zoom out
+				var idStr = zoomed;
+				setTimeout(function () {
+					document.images[idStr].src=thumb[picnum].src;
+					$(picid).css({'z-index' : '1'});
+					}, 1000); //Swap with thumbnail
+				$('#blackbg').fadeOut(1000); //Fade out backdrop
+				zoomed = null; //Mark as zoomed out
+		}
+	});
+});
+
+//Adjust the backdrop to any resizing or scrolling
+$(function () {
+	$(window).resize(function() {
+		$('#blackbg').width($(document).width()).height($(document).height());
+	});
+	$(window).scroll(function() {$('#blackbg').css({'top': $(window).scrollTop(), 'left' : $(window).scrollLeft()});});
+});
+	
+</script>
+</head>
+<body bgcolor="#D8F5D8">
+
+<div id="banner" style="top:25; left:0; position:absolute; z-index :0;"><img src="img/banner.jpg"></div>
+<div id="blackbg"></div>
+<div id="menu" style="top :200;left : 100; position :absolute;z-index :0;"><img src="img/body.jpg"></div>
+
+</body>
+</html>
