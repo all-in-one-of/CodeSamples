@@ -1,0 +1,3 @@
+1 - Python File Sequence Renamer (pp3.py)
+
+This file simply to rename a large number of files named sequentially. This one is hard coded to change files such as image0001.tga to image.0001.tga, for example to make the image sequence suitable to import into another program that requires a different format. To run it, it must be in the directory where the file sequence is and it will rename all the files except for itself when it is run.
